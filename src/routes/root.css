@@ -1,0 +1,71 @@
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/variable/pretendardvariable.css");
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
+
+:root {
+    --c-accent: #E8399C;
+    --c-foreground: #F9F9F9;
+    --c-background: #202020;
+    --width: 50rem;
+
+    font-family: "Pretendard Variable", sans-serif;
+    font-variation-settings: "wght" 400;
+    font-size: 1.125rem;
+    line-height: 1.8;
+    word-break: keep-all;
+}
+
+body {
+    margin: 0;
+}
+
+strong {
+    font-variation-settings: "wght" 900;
+    color: var(--c-accent);
+}
+
+@keyframes down {
+    0% {
+        opacity: 0;
+        transform: translateY(-100%) rotate(90deg);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0) rotate(90deg);
+    }
+}
+
+@keyframes right {
+    0% {
+        opacity: 0;
+        transform: translateX(-100%);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes left {
+    0% {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadein {
+    0% {
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
