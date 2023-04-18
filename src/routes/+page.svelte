@@ -1,5 +1,8 @@
 <script lang="ts">
+    import type { PageData } from "./$types";
     import ScrollAnimation from "$components/ScrollAnimation.svelte";
+
+    export let data: PageData;
 
     const contents = [
         {
@@ -16,7 +19,11 @@
         },
         {
             title: "몰입하는 경험",
-            body: "창업이 궁극적인 목표인 것처럼 적긴 했지만, 소마에 지원하면서 이것만은 얻어 가고 말겠다고 생각한 게 있습니다. 바로 한 프로젝트의 기획부터 배포, 서비스 및 유지보수까지 일련의 과정을 진행하고 *최대한 몰입해서* 개발해 보는 경험입니다. 팀원분들은 창업을 목표하지 않으시더라도, *소마를 0순위로 삼고 최대한 몰입해서 올 한 해 불태우며* 개발한다는 목표를 꼭 공유하는 분들로 모시고 싶습니다. 또 그런 만큼 *중간 탈출*... 절대 안 하실 분들이셨으면 좋겠습니다 🥺"
+            body: "창업이 궁극적인 목표인 것처럼 적긴 했지만, 소마에 지원하면서 이것만은 얻어 가고 말겠다고 생각한 게 있습니다. 바로 한 프로젝트의 기획부터 배포, 서비스 및 유지보수까지 일련의 과정을 진행하고 *최대한 몰입해서* 개발해 보는 경험입니다. 팀원분들은 창업을 반드시 목표하지는 않으시더라도, *소마를 0순위로 삼고 최대한 몰입해서 올 한 해 불태우며* 개발한다는 목표를 꼭 공유하는 분들로 모시고 싶습니다. 또 그런 만큼 *중간 탈출*... 절대 안 하실 분들이셨으면 좋겠습니다 🥺"
+        },
+        {
+            title: "디자인이 좋아요",
+            body: "뭐라도 더 어필해 보고 싶어서 덧붙이자면 🙄 *디자인*하는 걸 정말 좋아합니다. 백엔드와 프론트엔드 중에서 프론트를 택한 이유도 디자인과 맡닿아 있다는 점이 가장 큽니다. 이 사이트도 전부 제가 만들었어요 😊 특히 로고는 플렉서블 아이덴티티를 차용해서 새로고침할 때마다 다른 모양으로 바뀝니다! 디자인은 웬만하면 외주 맡기는 게 좋다고 듣기는 했지만 이러한 제 역량이 개발하는 과정에서 어느 정도는 도움이 되지 않을까 싶습니다."
         },
         {
             title: "감사합니다",
@@ -26,6 +33,8 @@
 
     let innerHeight: number = 0;
     let scrollY: number = 0;
+    let logoIndex: number = Math.floor(Math.random() * data.count) + 1;
+
     $: typoPosition = Math.max(0, innerHeight - scrollY);
     $: letterScroll = 1 - (typoPosition / innerHeight);
 </script>
@@ -34,15 +43,16 @@
 
 <div class="logo-container" style="--inner-height: {innerHeight}px; --top: {typoPosition}px; --letter-scroll: {letterScroll};">
     <div class="logo">
-        <img src="/images/DVRPLogo.png" alt="로고" />
+        <img alt="로고" src="/images/logo-{logoIndex}.png" />
     </div>
     <div class="typo">
-        <img src="/images/DVRPTypo.png" alt="타이포" />
+        <img alt="타이포" src="/images/typo-{logoIndex}.png" />
     </div>
     <span class="dream">DREAM</span>
     <span class="vyond">VYOND</span>
     <span class="reachable">REACHABLE</span>
     <span class="potential">POTENTIAL</span>
+    <img class="small" alt="로고" src="/images/icons/small.png" />
 </div>
 <div class="body" style="--margin-top: {innerHeight * 2}px;">
     {#each contents as content}
@@ -55,12 +65,10 @@
             </div>
         </ScrollAnimation>
     {/each}
-    <ScrollAnimation>
-        <div class="content links" style="--inner-height: {innerHeight * 0.5}px;">
-            <a href="https://swmaestromain.notion.site/3562f46091bb46d19a27c979b2bc298d"><img alt="Notion" src="/images/notion.webp" /></a>
-            <a href="https://github.com/dvrp0/swm-dvrp"><img alt="GitHub" src="/images/github.webp" /></a>
-        </div>
-    </ScrollAnimation>
+    <div class="content links" style="--inner-height: {innerHeight * 0.15}px;">
+        <a href="https://swmaestromain.notion.site/3562f46091bb46d19a27c979b2bc298d"><img alt="Notion" src="/images/icons/notion.webp" /></a>
+        <a href="https://github.com/dvrp0/swm-dvrp"><img alt="GitHub" src="/images/icons/github.webp" /></a>
+    </div>
 </div>
 
 <style>
@@ -74,32 +82,20 @@
         justify-content: center;
     }
 
-    .logo-container img {
-        display: block;
-        margin: 0 auto;
-        max-width: 70%;
-        max-height: 70%;
-    }
-
     .logo-container span {
-        position: fixed;
         font-family: "Montserrat", sans-serif;
         font-size: 15px;
         color: var(--c-background);
-        animation-play-state: paused;
-        animation-delay: calc(var(--letter-scroll) * -1s);
-        animation-iteration-count: 1;
-        animation-fill-mode: both;
     }
 
     .dream {
-        top: 5rem;
+        top: 6.35rem;
         left: 4.15rem;
         animation: down 1s ease-in;
     }
 
     .vyond {
-        top: 13rem;
+        top: 14.35rem;
         left: 4.15rem;
         animation: down 1s ease-in;
     }
@@ -127,6 +123,21 @@
         animation: left 1s ease-in;
     }
 
+    .small {
+        top: 5.2rem;
+        right: 5.15rem;
+        animation: left 1s ease-in;
+    }
+
+    .logo-container span,
+    .small {
+        position: fixed;
+        animation-play-state: paused;
+        animation-delay: calc(var(--letter-scroll) * -1s);
+        animation-iteration-count: 1;
+        animation-fill-mode: both;
+    }
+
     .logo {
         position: fixed;
         display: flex;
@@ -139,6 +150,14 @@
         display: flex;
         align-items: center;
         height: var(--inner-height);
+    }
+
+    .logo img,
+    .typo img {
+        display: block;
+        margin: 0 auto;
+        max-width: 70%;
+        max-height: 70%;
     }
 
     .body {
@@ -166,6 +185,7 @@
 
     .links {
         justify-content: center;
+        padding-left: 0.75rem;
     }
 
     .links img {
@@ -212,6 +232,11 @@
 
         .potential {
             bottom: 3rem;
+            right: 2.15rem;
+        }
+
+        .small {
+            top: 2.4rem;
             right: 2.15rem;
         }
 
